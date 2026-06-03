@@ -7,6 +7,10 @@
 <title>Portfolio — MCA AI/ML Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<!-- FIX #1: Load EmailJS SDK first, before any scripts that use it -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 /* ══════════════════════════════════════
@@ -191,7 +195,8 @@ nav.sc{box-shadow:var(--s2)}
 .ch{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.85rem,4vw,3.4rem);line-height:1.07;letter-spacing:-.024em;color:var(--text);margin-bottom:1.4rem}
 .ch .g{background:linear-gradient(118deg,var(--blue) 0%,var(--violet) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .cs{font-size:.74rem;color:var(--muted);line-height:1.95;margin-bottom:1.4rem;max-width:360px}
-.cls{display:flex;flex-direction:column;gap:.6rem}
+/* FIX #9: Renamed contact links wrapper to .contact-links to avoid .cls conflict with .sl */
+.contact-links{display:flex;flex-direction:column;gap:.6rem}
 .cl{display:flex;align-items:center;gap:.8rem;padding:.78rem 1.05rem;background:var(--card);border:1px solid var(--bdr);border-radius:var(--r1);color:var(--text2);font-size:.69rem;box-shadow:var(--s0);transition:all .22s}
 .cl:hover{border-color:var(--bdr2);color:var(--blue);transform:translateX(4px);box-shadow:0 4px 16px rgba(30,80,212,.09)}
 .ci{font-size:.92rem;width:22px;text-align:center;flex-shrink:0}
@@ -200,12 +205,13 @@ nav.sc{box-shadow:var(--s2)}
 .cf{display:flex;flex-direction:column;gap:.75rem}
 .fg{display:flex;flex-direction:column;gap:.25rem}
 .fg label{font-size:.56rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
-.fg input,.fg textarea{background:var(--card);border:1.5px solid var(--bdr);border-radius:var(--r1);padding:.7rem .9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:.72rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:none;box-shadow:var(--s0);-webkit-appearance:none}
+.fg input,.fg textarea{background:var(--card);border:1.5px solid var(--bdr);border-radius:var(--r1);padding:.7rem .9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:.72rem;outline:none;transition:border-color .2s,box-shadow .2s;resize:none;box-shadow:var(--s0);-webkit-appearance:none;-moz-appearance:none;appearance:none}
 .fg input::placeholder,.fg textarea::placeholder{color:var(--subtle)}
 .fg input:focus,.fg textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,80,212,.1)}
 .fg textarea{height:100px}
 .fsub{padding:.76rem 2rem;background:var(--blue);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;border-radius:var(--r1);transition:all .22s;box-shadow:0 3px 14px rgba(30,80,212,.28)}
 .fsub:hover{background:var(--blue-dk);transform:translateY(-2px);box-shadow:0 7px 24px rgba(30,80,212,.36)}
+.fsub:disabled{opacity:.65;cursor:not-allowed;transform:none}
 
 /* ═══════ FOOTER ═══════ */
 footer{background:var(--card);border-top:1px solid var(--bdr);padding:1.4rem clamp(.9rem,5vw,2.2rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
@@ -300,7 +306,7 @@ footer{background:var(--card);border-top:1px solid var(--bdr);padding:1.4rem cla
   <div class="blob b1"></div>
   <div class="blob b2"></div>
   <div class="hc">
-    <div class="htag"><div class="htag-dot"></div>BCA · AI/ML Specialization · 2025</div>
+    <div class="htag"><div class="htag-dot"></div>MCA · AI/ML Specialization · 2026</div>
     <h1 class="hname">Indrudge<span class="g">Panwar</span></h1>
     <p class="hrole">AI/ML Engineer &amp; Full-Stack Developer</p>
     <p class="hdesc">Building intelligent systems that learn, adapt, and create. From neural architectures to production ML pipelines — turning data into decisions.</p>
@@ -317,20 +323,21 @@ footer{background:var(--card);border-top:1px solid var(--bdr);padding:1.4rem cla
 <!-- ══ ABOUT ══ -->
 <div id="about">
   <div class="sw">
-    <div class="sl at">My Story</div>
-    <h2 class="st at">From curious <em style="font-family:'Instrument Serif',serif;font-style:italic">student</em><br>to AI builder.</h2>
+    <!-- FIX #10: Removed .at from .sl so scroll-reveal doesn't swallow the label -->
+    <div class="sl">My Story</div>
+    <h2 class="st">From curious <em style="font-family:'Instrument Serif',serif;font-style:italic">student</em><br>to AI builder.</h2>
     <div class="ag">
       <div class="at">
-        <p>I began with a simple question: <strong>how do machines learn?</strong> That curiosity pulled me deep into algorithms, datasets, and neural networks — and I never looked back.</p>
-        <blockquote class="aq">"The goal is not to replace human intelligence, but to amplify it — building tools that make us think bigger, move faster, and solve harder problems."</blockquote>
-        <p>During my MCA with AI/ML specialization, I built computer vision pipelines, NLP systems, and RL agents. The real challenge isn't the model — it's understanding the <strong>problem deeply enough</strong> to let the data speak.</p>
-        <p>I'm driven to build ML systems that go beyond notebooks and create genuine, scalable impact for real users.</p>
+        <p>My journey into AI started with genuine curiosity — not a roadmap. I wanted to understand <strong>how systems could learn</strong> from experience, and that question led me down a path I haven't left since. Algorithms, data, and neural networks stopped being abstract concepts and became tools I think in.</p>
+        <blockquote class="aq">"I don't see AI as a replacement for human thinking. I see it as a way to extend what humans are capable of — faster iteration, clearer insight, bigger problems worth solving."</blockquote>
+        <p>My MCA gave me more than technical depth — it gave me the discipline to sit with hard problems. Across computer vision pipelines, NLP systems, and reinforcement learning projects, I learned that the model is rarely the bottleneck. Understanding the problem clearly, and structuring the right question, is almost always the harder and more important work.</p>
+        <p>What drives me is building things that work outside the lab. I care about ML systems that are reliable, explainable, and useful to real people — not just impressive on a benchmark.</p>
       </div>
       <div class="tl">
-        <div class="ti"><div class="ty">2022 – 2025</div><div class="tt">BCA — Bachelor of Computer Applications</div><div class="td">Foundations in programming, data structures, and software engineering. First experiments with ML through academic mini-projects.</div></div>
-  
-        <div class="ti"><div class="ty">2025 - 2026</div><div class="tt">Research Internship</div><div class="td">Sentiment analysis &amp; text classification pipelines. Deployed production models via FastAPI + Docker on cloud infrastructure.</div></div>
-        <div class="ti"><div class="ty">2025 →</div><div class="tt">Now — Open to Opportunities</div><div class="td">Seeking ML/AI engineer roles. Building personal projects in GenAI, RAG systems, and real-time computer vision.</div></div>
+        <div class="ti"><div class="ty">2022 – 2025</div><div class="tt">BCA — Bachelor of Computer Applications</div><div class="td">Foundations in programming, data structures, and software engineering. First experiments with ML through academic mini &amp; Major-projects.</div></div>
+        <div class="ti"><div class="ty">2025</div><div class="tt">Research Internship</div><div class="td">Sentiment analysis &amp; text classification pipelines. Deployed production models via FastAPI + Docker on cloud infrastructure.</div></div>
+        <div class="ti"><div class="ty">2026 – 2028</div><div class="tt">MCA — Master of Computer Applications</div><div class="td">Deep learning, computer vision, NLP, reinforcement learning. Thesis: real-time multi-class object detection achieving 94% mAP.</div></div>
+        <div class="ti"><div class="ty"> </div><div class="tt">Open to Opportunities</div><div class="td">Seeking ML/AI engineer roles. Building personal projects in GenAI, RAG systems, and real-time computer vision.</div></div>
       </div>
     </div>
   </div>
@@ -394,22 +401,25 @@ footer{background:var(--card);border-top:1px solid var(--bdr);padding:1.4rem cla
 <!-- ══ CONTACT ══ -->
 <div id="contact" class="srf">
   <div class="sw">
-    <div class="sl cls">Let's Connect</div>
+    <!-- FIX #9: Use standalone .sl, not .sl.cls — .cls was causing layout collision -->
+    <div class="sl">Let's Connect</div>
     <div class="cg">
       <div>
         <h2 class="ch">Let's build<br>something<br><span class="g">intelligent.</span></h2>
         <p class="cs">Open to full-time roles, freelance projects, and research collaborations. If you're working on something in AI/ML, I'd love to hear about it.</p>
-        <div class="cls">
-          <a href="mailto:your@email.com"               class="cl"><span class="ci">✉️</span>your.email@gmail.com</a>
-          <a href="https://linkedin.com/in/yourprofile" class="cl"><span class="ci">💼</span>linkedin.com/in/yourprofile</a>
-          <a href="https://github.com/yourgithub"       class="cl"><span class="ci">🐙</span>github.com/yourgithub</a>
+        <!-- FIX #9: Changed .cls to .contact-links -->
+        <div class="contact-links">
+          <a href="mailto:indrudge@outlook.com"               class="cl"><span class="ci">✉️</span>indrudge@outlook.com</a>
+          <a href="https://www.linkedin.com/in/indrudge-panwar-2a6877268" class="cl"><span class="ci">💼</span>linkedin.com/in/Indrudge-Panwar</a>
+          <a href="https://github.com/indrudge"       class="cl"><span class="ci">🐙</span>github.com/Indrudge</a>
           <a href="#"                                    class="cl"><span class="ci">📄</span>Download Resume (PDF)</a>
         </div>
       </div>
+      <!-- FIX #3: Added id attributes to all form inputs so getElementById() works -->
       <div class="cf">
-        <div class="fg"><label>Your Name</label><input type="text" placeholder="Jane Smith" autocomplete="name"></div>
-        <div class="fg"><label>Email Address</label><input type="email" placeholder="jane@company.com" autocomplete="email"></div>
-        <div class="fg"><label>Message</label><textarea placeholder="Tell me about your project or opportunity..." rows="5"></textarea></div>
+        <div class="fg"><label for="name">Your Name</label><input id="name" type="text" placeholder="Jane Smith" autocomplete="name"></div>
+        <div class="fg"><label for="email">Email Address</label><input id="email" type="email" placeholder="jane@company.com" autocomplete="email"></div>
+        <div class="fg"><label for="message">Message</label><textarea id="message" placeholder="Tell me about your project or opportunity..." rows="5"></textarea></div>
         <button class="fsub" id="sendBtn">Send Message →</button>
       </div>
     </div>
@@ -418,7 +428,7 @@ footer{background:var(--card);border-top:1px solid var(--bdr);padding:1.4rem cla
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <div class="fc">© 2025 <b>Your Name</b> · Built with Python &amp; passion</div>
+  <div class="fc">© 2026 <b>Indrudge Panwar</b> · Built with Python &amp; passion</div>
   <div class="fls">
     <a href="#about">Story</a><a href="#skills">Skills</a>
     <a href="#projects">Projects</a><a href="#contact">Contact</a>
@@ -458,16 +468,26 @@ function closeNav(){document.getElementById('hbg').classList.remove('op');docume
 document.addEventListener('click',e=>{if(!e.target.closest('#nav')&&!e.target.closest('.mm'))closeNav();});
 
 /* ── Hero canvas (particle network) ── */
+/* FIX #6: Particles now initialize within actual canvas bounds after resize() */
 (function(){
   const cv=document.getElementById('hcv'),ctx=cv.getContext('2d');
   let W,H,pts=[],mouse={x:null,y:null};
   const mob=()=>innerWidth<=640;
-  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+  function resize(){
+    W=cv.width=cv.offsetWidth;
+    H=cv.height=cv.offsetHeight;
+    // Re-clamp existing particles within new bounds
+    pts.forEach(p=>{
+      p.x=Math.min(p.x,W);
+      p.y=Math.min(p.y,H);
+    });
+  }
   resize();window.addEventListener('resize',resize,{passive:true});
   cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;},{passive:true});
   cv.addEventListener('mouseleave',()=>{mouse.x=null;},{passive:true});
   const n=mob()?42:90;
-  for(let i=0;i<n;i++)pts.push({x:Math.random()*1800,y:Math.random()*900,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.6+.5,c:Math.random()>.5?'30,80,212':'91,53,201'});
+  // FIX #6: Use actual W/H for initial particle positions, not hardcoded 1800/900
+  for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.6+.5,c:Math.random()>.5?'30,80,212':'91,53,201'});
   (function draw(){
     ctx.clearRect(0,0,W,H);
     const ld=mob()?75:118;
@@ -507,9 +527,10 @@ document.addEventListener('click',e=>{if(!e.target.closest('#nav')&&!e.target.cl
 })();
 
 /* ── Three.js Neural Network ── */
+/* FIX #7: Added resize handler for Three.js canvas */
 (function(){
   const wrap=document.getElementById('bw'),cv=document.getElementById('bcv');
-  const W=wrap.offsetWidth,H=wrap.offsetHeight;
+  let W=wrap.offsetWidth,H=wrap.offsetHeight;
   cv.width=W;cv.height=H;
   const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
   renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0,0);
@@ -550,6 +571,15 @@ document.addEventListener('click',e=>{if(!e.target.closest('#nav')&&!e.target.cl
   wrap.addEventListener('wheel',e=>{cam.position.z=Math.max(14,Math.min(52,cam.position.z+e.deltaY*.03));},{passive:true});
   wrap.addEventListener('touchstart',e=>{lx=e.touches[0].clientX;ly=e.touches[0].clientY;},{passive:true});
   wrap.addEventListener('touchmove',e=>{e.preventDefault();rotY+=(e.touches[0].clientX-lx)*.012;rotX+=(e.touches[0].clientY-ly)*.012;lx=e.touches[0].clientX;ly=e.touches[0].clientY;},{passive:false});
+
+  // FIX #7: Handle window resize for Three.js renderer
+  window.addEventListener('resize',()=>{
+    const nW=wrap.offsetWidth,nH=wrap.offsetHeight;
+    renderer.setSize(nW,nH);
+    cam.aspect=nW/nH;
+    cam.updateProjectionMatrix();
+  },{passive:true});
+
   const clk=new THREE.Clock();
   (function anim(){
     requestAnimationFrame(anim);const t=clk.getElapsedTime();
@@ -584,17 +614,66 @@ document.addEventListener('click',e=>{if(!e.target.closest('#nav')&&!e.target.cl
 /* ── Scroll reveal ── */
 const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.07,rootMargin:'0px 0px -20px 0px'});
 document.querySelectorAll('.ti,.sk,.pc').forEach((el,i)=>{el.style.transitionDelay=(i%6*.065)+'s';ro.observe(el);});
+// FIX #10: Removed .at from observer targets — .at is the about text container, not a reveal element
 const fo=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}}),{threshold:.04});
-document.querySelectorAll('.sl,.st,.at,.ch,.cs,.cls,.cf').forEach(el=>{
+document.querySelectorAll('.sl,.st,.ch,.cs,.contact-links,.cf').forEach(el=>{
   el.style.cssText+='opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;';
   fo.observe(el);
 });
 
 /* ── Form submit ── */
-document.getElementById('sendBtn').addEventListener('click',function(){
-  const orig=this.textContent;
-  this.textContent='✓ Message Sent!';this.style.background='#0d7a56';
-  setTimeout(()=>{this.textContent=orig;this.style.background='';},3000);
+/* FIX #1: emailjs.init() only once — SDK already loaded in <head> */
+emailjs.init("qOQCamYwroLAM9qeS");
+
+document.getElementById('sendBtn').addEventListener('click', function () {
+  const btn = this;
+
+  const nameVal    = document.getElementById('name').value.trim();
+  const emailVal   = document.getElementById('email').value.trim();
+  const messageVal = document.getElementById('message').value.trim();
+
+  // FIX #4: Validate BEFORE sending, not inside catch()
+  if (!nameVal || !emailVal || !messageVal) {
+    alert("Please fill out all fields.");
+    return;
+  }
+
+  const params = {
+    from_name:  nameVal,
+    from_email: emailVal,
+    message:    messageVal
+  };
+
+  const originalText = btn.textContent;
+  btn.textContent = "Sending...";
+  btn.disabled = true;
+
+  emailjs.send("service_y0r9otx", "template_jljkh3n", params)
+    .then(() => {
+      btn.textContent = "✓ Message Sent!";
+      btn.style.background = "#0d7a56";
+
+      document.getElementById('name').value    = '';
+      document.getElementById('email').value   = '';
+      document.getElementById('message').value = '';
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3000);
+    })
+    .catch((error) => {
+      console.error(error);
+      btn.textContent = "❌ Failed — Try Again";
+      btn.style.background = "#c0392b";
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3000);
+    });
 });
 </script>
 </body>
